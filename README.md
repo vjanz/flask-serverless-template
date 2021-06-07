@@ -1,5 +1,5 @@
 # Flask-serverless-boilerplate
-![Serverless](https://app.serverless.com/static/media/logo-framework.385e7637.png)
+![Serverless](https://i.imgur.com/2QqTjAb.png)
 
 ## Usage
 Clone the project:
