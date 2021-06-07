@@ -57,6 +57,9 @@ make deploy-prod
 make deploy-dev
 ```
 
+#### TODO
+Implement CI/CD with Github actions
+
 ## License
 
 This project is licensed under the terms of the MIT license.
