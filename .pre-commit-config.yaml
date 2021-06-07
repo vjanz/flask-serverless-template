@@ -1,0 +1,33 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: detect-aws-credentials
+      - id: detect-private-key
+  - repo: https://github.com/pycqa/isort
+    rev: 5.5.4
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+
+  - repo: https://github.com/psf/black
+    rev: 19.10b0 # Replace by any tag/version: https://github.com/psf/black/tags
+    hooks:
+      - id: black
+        language_version: python3 # Should be a command that runs python3.6+t runs python3.6+
+
+  - repo: https://github.com/myint/autoflake
+    rev: v1.4
+    hooks:
+      - id: autoflake
+        args:
+          - --in-place
+          - --remove-all-unused-imports
+          - --expand-star-imports
+          - --remove-duplicate-keys
+          - --remove-unused-variables
+          - --exclude=__init__.py

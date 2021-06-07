@@ -1,0 +1,9 @@
+# Map all the events from api gateway to the flask app
+app:
+  # Handler is necessary to make requests compatible
+  # https://www.serverless.com/plugins/serverless-wsgi
+  handler: wsgi_handler.handler
+  description: "<Description for the lambda function>"
+  events:
+    - http: ANY /
+    - http: 'ANY {proxy+}'

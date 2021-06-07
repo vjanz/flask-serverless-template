@@ -1,0 +1,42 @@
+region: ${self:provider.region}
+# Define stages for the function.
+# https://github.com/jeremydaly/serverless-stage-manager
+# Define stages on the >custom key<
+stages:
+  - dev
+  - prod
+# wsgi serverless plugin
+# https://github.com/logandk/serverless-wsgi
+wsgi:
+  app: main_app.app # Where the flask instance is located
+  packRequirements: false
+# Serverless plugin to package the application (pythonRequirements)
+# In this case docker is being used to package the application. This is necessary when you have packages
+# like numpy or pandas.. With the plugin you can use different methods for packaging
+# (layers, from requirements.txt, docker, etc) https://github.com/UnitedIncome/serverless-python-requirements
+pythonRequirements:
+  dockerizePip: non-linux
+# Here the python-state-manager plugin is being used to redirect the trafic to a specific domain
+# https://github.com/amplify-education/serverless-domain-manager
+customDomain:
+  domainName: ${self:custom.domains.${self:provider.stage}} # Get the domain based on the stage
+  basePath: ${self:custom.basePath.${self:provider.stage}} # Get the basepath based on the stage
+  createRoute53Record: true
+# Add custom domain names to separate based on the environment
+domains:
+  prod: "flask.xypsylon.xyz"
+  dev: "flaskdev.xypsylon.xyz"
+basePath:
+  prod: "flask-serverless"
+  dev: "flask-serverless"
+ENVIRONMENT:
+  prod: "PRODUCTION"
+  dev: "DEVELOPMENT"
+SECRET_KEY:
+  prod: "SECRET_KEY_PROD"
+  dev: "SECRET_KEY_DEV"
+
+# Get keys from secret manager
+#GOOGLE_MAPS_API_KEY:
+#  prod: ${ssm:/google_maps_api_key~true}
+#  dev: ${ssm:/google_maps_api_key_dev~true}

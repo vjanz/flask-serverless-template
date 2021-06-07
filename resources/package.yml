@@ -1,0 +1,20 @@
+# Specify the modules that you dont want to include into the application as lambda is very limited to size
+# You can also use other methods to include or exclude modules:
+# https://www.serverless.com/framework/docs/providers/aws/guide/packaging/
+exclude:
+  - resources/**
+  - .idea/**
+  - __pycache__/
+  - .serverless
+  - static/**
+  - node_modules/**
+  - venv/**
+  - .pytest_cache
+  - .serverless-offline
+  - .env
+  - requirements.txt
+  - tests/**
+  - README.md
+  - package.json
+  - package-lock.json
+  - Makefile

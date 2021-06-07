@@ -1,0 +1,28 @@
+service: serverless-flask # <Service name: Change this>
+frameworkVersion: '2'
+
+custom: ${file(resources/customs.yml)}
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'dev'}
+  runtime: python3.8 # Python runtime
+  region: us-east-1 # Region to deploy
+  stackName: sls-flask-stack-${self:provider.stage} # Cloudformation stack.(Change this)
+  lambdaHashingVersion: 20201221
+  apiGateway:
+    shouldStartNameWithService: true
+  environment: # Environment Variables
+    env: ${self:custom.ENVIRONMENT.${self:provider.stage}}
+    API_GATEWAY_BASE_PATH: ${self:custom.customDomain.basePath} # This is necessary
+    SECRET_KEY: ${self:custom.SECRET_KEY.${self:provider.stage}}
+package: ${file(resources/package.yml)} # Package reference
+
+functions:
+  - ${file(resources/app.yml)} # Function reference
+
+plugins:
+  - serverless-python-requirements
+  - serverless-domain-manager
+  - serverless-wsgi
+  - serverless-stage-manager
